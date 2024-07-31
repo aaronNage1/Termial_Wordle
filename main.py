@@ -5,6 +5,7 @@
 
 import random
 
+
 def instructions():
     instr_msg = "\nYou have 6 guesses to correctly guess a 5 letter word.\nEach guess you make will tell you information on what the word could be.\n\
     If you guessed a correct letter, this will appear in the correct letters list below each guess.\nIf the correct letter in the correct space, this will appear in the word progress bar below.\n"
@@ -22,18 +23,17 @@ def pick_random_word ():
     global value
     value = random.randint(0,num_lines)
 
-    print(content[value])
-
-    our_word = "Hello"
+    print(content[value].rstrip("\n"))
 
     file.close()
-    return our_word
+    return content[value].rstrip("\n")
 
 # Base function to provide a clear structure of how the game is setup.
 def start_game ():
     print("A random word has been generated.\n")
     answer = pick_random_word()
     make_your_guess(answer)
+
 
 
 def make_your_guess (answer):
@@ -45,23 +45,24 @@ def make_your_guess (answer):
             guess = input(player_input)
             if len(guess)!=5:
                 print("Error, you must guess a 5 letter word.")
-        guess = guess.upper()
-        answer = answer.upper()
+            guess = guess.upper()
+            answer = answer.upper()
 
-        if guess == answer:
-            correct_guess()
-            return
+            if guess == answer:
+                correct_guess()
+                return
 
-        for i in range(5):
-            for j in range (5):
-                if guess[i] == answer[j]:
-                    correct_letters = correct_letters + guess[i]
+            for i in range(5):
+                for j in range (5):
+                    if guess[i] == answer[j]:
+                        correct_letters = correct_letters + guess[i]
 
-        if correct_letters == "":
-            print("\nNo correct letters are guessed so far.\n")
-        else:
-            print("\nThe letters " + correct_letters + " are in the answer.\n\n")
+            if correct_letters == "":
+                print("\nNo correct letters are guessed so far.\n")
+            else:
+                print("\nThe letters " + correct_letters + " are in the answer.\n\n")
 
+        out_of_turns()
         return
     
 def correct_guess():
