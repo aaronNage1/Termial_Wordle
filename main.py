@@ -5,10 +5,11 @@
 
 import random
 
+error_msg = "Please select \"Y\" or \"N\"."
 
 def instructions():
-    instr_msg = "\nYou have 6 guesses to correctly guess a 5 letter word.\nEach guess you make will tell you information on what the word could be.\n\
-    If you guessed a correct letter, this will appear in the correct letters list below each guess.\nIf the correct letter in the correct space, this will appear in the word progress bar below.\n"
+    instr_msg = "\nYou have 6 guesses to correctly guess a 5 letter word.\nEach guess you make will tell you information on what the word could be.\nYour guess will appear above the progress word for better visualization\n\
+    If you guessed a correct letter, this will appear as a lowercase letter.\nIf the correct letter in the correct space, this will appear as an uppercase letter.\n"
     print(instr_msg)
     return
 
@@ -39,6 +40,7 @@ def start_game ():
 def make_your_guess (answer):
         
         correct_letters = ""
+        correct_space = list("-----")
 
         for x in range (6):
             player_input = "You are on guess " + str(x) + " out of 6:"
@@ -55,18 +57,30 @@ def make_your_guess (answer):
             for i in range(5):
                 for j in range (5):
                     if guess[i] == answer[j]:
-                        correct_letters = correct_letters + guess[i]
+                        #correct_letters = correct_letters + guess[i]
+                        if i == j:
+                            correct_space[i] = guess[i]
+                        elif correct_space[i] =="-" or correct_space[i].islower():
+                            correct_space[i] = guess[i].lower()
 
-            if correct_letters == "":
-                print("\nNo correct letters are guessed so far.\n")
-            else:
-                print("\nThe letters " + correct_letters + " are in the answer.\n\n")
+            print(guess)
+            print("".join(correct_space))
+
 
         out_of_turns()
         return
     
 def correct_guess():
     print("That is correct!, You WIN!!\n")
+
+    replay = input("Would you like to play again? (Y/N)")
+
+    if replay.upper() != "Y" and replay.upper() != "N":
+        print(error_msg)
+    elif replay.upper() == "Y":
+        start_game()
+    else:
+        return
 
 def out_of_turns():
     print("You lost, unfortunate....Get good.")
@@ -75,10 +89,9 @@ welcome_msg = "Welcome to Aaron's Version of Wordle!\n\nThis is just wordle with
 print(welcome_msg)
 
 details = input()
-details_err_msg = "Can you read?!"
 
 if details.upper() != "Y" and details.upper() != "N":
-    print(details_err_msg)
+    print(error_msg)
 elif details.upper() == "Y":
     instructions()
 
