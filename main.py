@@ -40,9 +40,9 @@ def start_game ():
 def make_your_guess (answer):
         
         correct_letters = ""
-        correct_space = list("-----")
 
         for x in range (6):
+            correct_space = list("-----")
             player_input = "You are on guess " + str(x) + " out of 6:"
             guess = input(player_input)
             if len(guess)!=5:
@@ -57,11 +57,18 @@ def make_your_guess (answer):
             for i in range(5):
                 for j in range (5):
                     if guess[i] == answer[j]:
-                        #correct_letters = correct_letters + guess[i]
+                        correct_letters = correct_letters + guess[i]
                         if i == j:
-                            correct_space[i] = guess[i]
+                            correct_space[i] = guess[i] 
                         elif correct_space[i] =="-" or correct_space[i].islower():
                             correct_space[i] = guess[i].lower()
+            
+            breakdown = list("-----")
+            for i in range (5):
+                breakdown[i] = answer.count(correct_space[i].upper())
+
+            print(breakdown)
+                
 
             print(guess)
             print("".join(correct_space))
