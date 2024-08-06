@@ -64,10 +64,23 @@ def make_your_guess (answer):
                             correct_space[i] = guess[i].lower()
             
             breakdown = list("-----")
+            breakdown2 = list("-----")
             for i in range (5):
                 breakdown[i] = answer.count(correct_space[i].upper())
+                breakdown2[i] = guess.count(correct_space[i].upper())
+
+            for i in range(5):
+                # If the guess has more identical characters than in the answer
+                if breakdown[i] < breakdown2[i] and correct_space[i].islower():
+                    for j in range(5):
+                        # 
+                        if correct_space[j].isupper() and correct_space[i] == correct_space[j]:
+                            continue
+                        else:
+                            correct_space[i] = "-"
 
             print(breakdown)
+            print(breakdown2)
                 
 
             print(guess)
