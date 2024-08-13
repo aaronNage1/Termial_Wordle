@@ -45,8 +45,9 @@ def make_your_guess (answer):
             correct_space = list("-----")
             player_input = "You are on guess " + str(x) + " out of 6:"
             guess = input(player_input)
-            if len(guess)!=5:
-                print("Error, you must guess a 5 letter word.")
+
+            check_vaild_guess(guess)
+
             guess = guess.upper()
             answer = answer.upper()
 
@@ -72,13 +73,18 @@ def make_your_guess (answer):
             for i in range(5):
                 # If the guess has more identical characters than in the answer
                 if breakdown[i] < breakdown2[i] and correct_space[i].islower():
+                    ylw_counter = 0
                     for j in range(5):
-                        # 
+                        # If the correct letter is in the correct space, continue
                         if correct_space[j].isupper() and correct_space[i] == correct_space[j]:
                             continue
-                        else:
-                            correct_space[i] = "-"
-
+                        # If there is a correct letter in the wrong space, we will use a counter to track how many times that letter is guessed.
+                        elif correct_space[j].islower() and correct_space[j] == correct_space[i]:
+                            ylw_counter += 1
+                            # If the single letter appears more time in the guess than in the answer, we will replace it to avoid the user thinking there is more instinces of that letter.
+                            if ylw_counter > breakdown[i]:
+                                correct_space[j] = "-"
+                        
             print(breakdown)
             print(breakdown2)
                 
@@ -89,6 +95,22 @@ def make_your_guess (answer):
 
         out_of_turns()
         return
+
+def check_vaild_guess(guess):
+
+    if len(guess)!=5:
+        print("Error, you must guess a 5 letter word.")
+
+    with open("random_words.txt", "r") as file:
+        content = file.readlines()
+
+    if guess in content:
+        file.close()
+        return
+
+    print("Not a valid word")
+    file.close()
+    return
     
 def correct_guess():
     print("That is correct!, You WIN!!\n")
