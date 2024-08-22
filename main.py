@@ -47,16 +47,18 @@ def make_your_guess (answer):
             guess = input(player_input)
 
             check_vaild_guess(guess)
-
+ 
             guess = guess.upper()
             answer = answer.upper()
+
+            word_length = len(answer)
 
             if guess == answer:
                 correct_guess()
                 return
 
-            for i in range(5):
-                for j in range (5):
+            for i in range(word_length):
+                for j in range (word_length):
                     if guess[i] == answer[j]:
                         correct_letters = correct_letters + guess[i]
                         if i == j:
@@ -64,17 +66,17 @@ def make_your_guess (answer):
                         elif correct_space[i] =="-" or correct_space[i].islower():
                             correct_space[i] = guess[i].lower()
             
-            breakdown = list("-----")
-            breakdown2 = list("-----")
-            for i in range (5):
-                breakdown[i] = answer.count(correct_space[i].upper())
-                breakdown2[i] = guess.count(correct_space[i].upper())
+            breakdown = []
+            breakdown2 = []
+            for i in range (word_length):
+                breakdown.append(answer.count(correct_space[i].upper()))
+                breakdown2.append(guess.count(correct_space[i].upper()))
 
-            for i in range(5):
+            for i in range(word_length):
                 # If the guess has more identical characters than in the answer
                 if breakdown[i] < breakdown2[i] and correct_space[i].islower():
                     ylw_counter = 0
-                    for j in range(5):
+                    for j in range(word_length):
                         # If the correct letter is in the correct space, continue
                         if correct_space[j].isupper() and correct_space[i] == correct_space[j]:
                             continue
@@ -104,11 +106,11 @@ def check_vaild_guess(guess):
     with open("random_words.txt", "r") as file:
         content = file.readlines()
 
-    if guess in content:
+    if guess.lower().rstrip("\n") in content:
         file.close()
         return
-
-    print("Not a valid word")
+    else:
+        print("Not a valid word")
     file.close()
     return
     
