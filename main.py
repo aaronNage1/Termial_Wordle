@@ -42,12 +42,15 @@ def make_your_guess (answer):
         correct_letters = ""
 
         for x in range (6):
-            correct_space = list("-----")
-            player_input = "You are on guess " + str(x) + " out of 6:"
-            guess = input(player_input)
 
-            check_vaild_guess(guess)
- 
+            while True:
+                correct_space = list("-----")
+                player_input = "You are on guess " + str(x) + " out of 6:"
+                guess = input(player_input)
+
+                if check_vaild_guess(guess) == True:
+                    break
+
             guess = guess.upper()
             answer = answer.upper()
 
@@ -102,17 +105,18 @@ def check_vaild_guess(guess):
 
     if len(guess)!=5:
         print("Error, you must guess a 5 letter word.")
+        return False
 
     with open("random_words.txt", "r") as file:
-        content = file.readlines()
+        content = file.read()
 
-    if guess.lower().rstrip("\n") in content:
+    if guess.lower().rstrip("\n") in content: 
         file.close()
-        return
+        return True
     else:
         print("Not a valid word")
-    file.close()
-    return
+        file.close()
+        return False
     
 def correct_guess():
     print("That is correct!, You WIN!!\n")
