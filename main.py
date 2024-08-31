@@ -43,6 +43,7 @@ def make_your_guess (answer):
 
         for x in range (6):
 
+            # Repeat this loop as long as the guess is not a valid guess
             while True:
                 correct_space = list("-----")
                 player_input = "You are on guess " + str(x) + " out of 6:"
@@ -60,10 +61,13 @@ def make_your_guess (answer):
                 correct_guess()
                 return
 
+            
             for i in range(word_length):
                 for j in range (word_length):
+                    # Correct letter in correct letter gets capital letter in progress string
                     if guess[i] == answer[j]:
                         correct_letters = correct_letters + guess[i]
+                        # Correct letter in incorrect space gets lower case (not worried about instances in word for now)
                         if i == j:
                             correct_space[i] = guess[i] 
                         elif correct_space[i] =="-" or correct_space[i].islower():
