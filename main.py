@@ -24,7 +24,7 @@ def pick_random_word ():
     global value
     value = random.randint(0,num_lines)
 
-    print(content[value].rstrip("\n"))
+    #print(content[value].rstrip("\n"))
 
     file.close()
     return content[value].rstrip("\n")
@@ -32,6 +32,9 @@ def pick_random_word ():
 # Base function to provide a clear structure of how the game is setup.
 def start_game ():
     print("A random word has been generated.\n")
+
+    word_length = input("How mayn characters would you like your word to be?\n")
+
     answer = pick_random_word()
     make_your_guess(answer)
 
@@ -94,8 +97,8 @@ def make_your_guess (answer):
                             if ylw_counter > breakdown[i]:
                                 correct_space[j] = "-"
                         
-            print(breakdown)
-            print(breakdown2)
+            #print(breakdown)
+            #print(breakdown2)
                 
 
             print(guess)
@@ -114,6 +117,7 @@ def check_vaild_guess(guess):
     with open("random_words.txt", "r") as file:
         content = file.read()
 
+    # If word is in file return true
     if guess.lower().rstrip("\n") in content: 
         file.close()
         return True
@@ -132,6 +136,7 @@ def correct_guess():
     elif replay.upper() == "Y":
         start_game()
     else:
+        print("Thanks for playing!\n")
         return
 
 def out_of_turns():
